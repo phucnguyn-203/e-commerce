@@ -1,0 +1,8 @@
+/admin/node_modules
+/admin/.env
+/client/node_modules
+/client/.next
+/client/.env
+/server/node_modules
+/server/.env
+.DS_Store

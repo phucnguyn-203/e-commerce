@@ -1,0 +1,23 @@
+:root {
+    --sidebar-wide: 16rem;
+    --header-height: 4rem;
+    --color-primary: #0E9F6E;
+}
+
+.light {
+    --color-bg-primary: #F9FAFB;
+    --color-bg-secondary: #FFFFFF;
+    --color-text-primary: #0E9F6E;
+    --color-text-secondary: #707275;
+}
+
+.dark {
+    --color-bg-primary: #121317;
+    --color-bg-secondary: #1A1C23;
+    --color-text-primary: #F4F5F7;
+    --color-text-secondary: #9E9E9E
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
