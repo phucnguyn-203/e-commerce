@@ -5,30 +5,27 @@ module.exports = class {
     }
 
     filter() {
-        const objQuery = { ...this.queryString };
+        const { search, ...objQuery } = this.queryString;
         const excludedFields = ["page", "limit", "sort", "fields", "search"];
-        excludedFields.forEach((el) => {
-            delete objQuery[el];
+
+        excludedFields.forEach((field) => {
+            delete objQuery[field];
         });
 
-        let queryString = JSON.stringify(objQuery);
-        queryString = queryString.replace(
-            /\b(gt|gte|lt|lte)\b/g,
-            (match) => `$${match}`
+        const queryString = JSON.parse(
+            JSON.stringify(objQuery).replace(
+                /\b(gt|gte|lt|lte)\b/g,
+                (match) => `$${match}`
+            )
         );
-        queryString = JSON.parse(queryString);
-        if (this.queryString.search) {
-            const q = this.queryString.search.replace(
-                /[-\/\\^$*+?.()|[\]{}]/g,
-                "\\$&"
-            );
-            const filter = {
-                $and: [{ name: { $regex: new RegExp(q, "i") } }, queryString],
-            };
-            this.query = this.query.find(filter);
-        } else {
-            this.query = this.query.find(queryString);
-        }
+
+        const q = search
+            ? search.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")
+            : "";
+
+        const query = { ...queryString, name: { $regex: new RegExp(q, "i") } };
+
+        this.query = this.query.find(query);
         return this;
     }
     sort() {
